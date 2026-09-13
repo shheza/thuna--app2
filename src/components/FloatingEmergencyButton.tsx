@@ -9,7 +9,7 @@ export const FloatingEmergencyButton: React.FC = () => {
   if (roleMode !== 'student') return null;
 
   return (
-    <aside aria-label="Emergency Help" className="fixed bottom-20 right-4 sm:bottom-8 sm:right-8 z-40">
+    <aside aria-label="Emergency Help" className="fixed bottom-22 right-4 sm:bottom-8 sm:right-8 z-40">
       {/* Outer pulsing glow blur effect */}
       <div className="absolute -inset-1.5 bg-red-600 rounded-full blur-md opacity-60 animate-pulse pointer-events-none" />
       

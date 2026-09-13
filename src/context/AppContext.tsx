@@ -81,6 +81,7 @@ interface AppContextType {
   createServiceRequest: (params: Omit<ServiceRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>) => ServiceRequest;
   updateRequestStatus: (requestId: string, status: RequestStatus) => void;
   updateWorkerAvailability: (workerId: string, status: Worker['availabilityStatus']) => void;
+  updateWorkerProfile: (workerId: string, updates: Partial<Worker>) => void;
   resetDemoData: () => void;
 }
 
@@ -601,6 +602,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setWorkers(prev => prev.map(w => w.id === workerId ? { ...w, availabilityStatus: status } : w));
   };
 
+  const updateWorkerProfile = (workerId: string, updates: Partial<Worker>) => {
+    setWorkers(prev => prev.map(w => w.id === workerId ? { ...w, ...updates } : w));
+  };
+
   const resetDemoData = () => {
     localStorage.removeItem('thuna_current_user');
     localStorage.removeItem('thuna_is_auth');
@@ -678,6 +683,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       createServiceRequest,
       updateRequestStatus,
       updateWorkerAvailability,
+      updateWorkerProfile,
       resetDemoData
     }}>
       {children}

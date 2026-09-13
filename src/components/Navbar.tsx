@@ -233,45 +233,43 @@ export const Navbar: React.FC = () => {
               </div>
             )}
 
-            {/* Mobile View Indicator */}
-            <div className="md:hidden flex items-center">
-              <button 
-                onClick={() => {
-                  setRoleMode('student');
-                  setActiveView('landing');
-                }}
-                className="p-2 text-slate-600 hover:text-slate-900 font-bold text-xs bg-slate-100 rounded-lg"
-              >
-                Home
-              </button>
-            </div>
-
+            {/* Auth Buttons End */}
           </div>
 
         </div>
       </div>
 
-      {/* Mobile Bottom Navigation Bar */}
+      {/* Mobile Floating Bottom Menu Bar (Resident Mode) */}
       {roleMode === 'student' && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-2 py-1.5 flex justify-around items-center shadow-lg">
-          {navItems.map(item => (
-            <button
-              key={item.id}
-              onClick={() => setActiveView(item.id)}
-              className={`flex flex-col items-center py-1 px-2 rounded-lg text-xs font-medium relative ${
-                activeView === item.id ? 'text-amber-600 font-bold' : 'text-slate-500'
-              }`}
-            >
-              {item.icon}
-              <span className="text-[10px] mt-0.5">{item.label}</span>
-              {item.badge !== undefined && item.badge > 0 && (
-                <span className="absolute -top-1 right-1 bg-amber-500 text-slate-950 font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
-                  {item.badge}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
+        <nav 
+          aria-label="Mobile Resident Navigation"
+          className="md:hidden fixed bottom-3 inset-x-3 sm:inset-x-6 max-w-md mx-auto z-40 bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl shadow-2xl shadow-slate-900/15 p-1.5 flex justify-around items-center"
+        >
+          {navItems.map(item => {
+            const isActive = activeView === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveView(item.id)}
+                className={`flex flex-col items-center py-1.5 px-3 rounded-xl text-xs transition-all relative ${
+                  isActive 
+                    ? 'bg-amber-500 text-slate-950 font-black shadow-xs' 
+                    : 'text-slate-500 hover:text-slate-900 font-bold'
+                }`}
+              >
+                {item.icon}
+                <span className="text-[10px] mt-0.5 tracking-tight">{item.label}</span>
+                {item.badge !== undefined && item.badge > 0 && (
+                  <span className={`absolute -top-1 right-1 font-extrabold text-[9px] w-4 h-4 rounded-full flex items-center justify-center ${
+                    isActive ? 'bg-slate-950 text-white' : 'bg-amber-500 text-slate-950'
+                  }`}>
+                    {item.badge}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </nav>
       )}
     </header>
   );
